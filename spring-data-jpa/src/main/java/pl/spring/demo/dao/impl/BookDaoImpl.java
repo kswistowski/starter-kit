@@ -44,11 +44,15 @@ public class BookDaoImpl implements BookDao {
     @Override
     @NullableId
     public BookTo save(BookTo book) {
-        if (book.getId() == null) {
-            book.setId(sequence.nextValue(ALL_BOOKS));
-        }
+//        if (book.getId() == null) {
+//            book.setId(sequence.nextValue(ALL_BOOKS));
+//        }
         ALL_BOOKS.add(book);
         return book;
+    }
+    
+    public Sequence getSequence() {
+    	return this.sequence;
     }
 
     public void setSequence(Sequence sequence) {

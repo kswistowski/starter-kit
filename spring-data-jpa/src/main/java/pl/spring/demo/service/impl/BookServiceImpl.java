@@ -10,7 +10,7 @@ import pl.spring.demo.to.BookTo;
 
 import java.util.List;
 
-@Service
+@Service("bookServiceImpl")
 public class BookServiceImpl implements BookService {
 
     private BookDao bookDao;

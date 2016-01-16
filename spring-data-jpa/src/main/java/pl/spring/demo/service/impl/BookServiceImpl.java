@@ -5,6 +5,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import pl.spring.demo.dao.BookDao;
+import pl.spring.demo.mapper.BookMapper;
 import pl.spring.demo.service.BookService;
 import pl.spring.demo.to.BookTo;
 
@@ -19,26 +20,26 @@ public class BookServiceImpl implements BookService {
     public BookServiceImpl( BookDao bookDao) {
     	this.bookDao = bookDao;
 	}
-
+    
     @Override
     @Cacheable("booksCache")
     public List<BookTo> findAllBooks() {
-        return bookDao.findAll();
+        return BookMapper.map2To(bookDao.findAll());
     }
 
     @Override
     public List<BookTo> findBooksByTitle(String title) {
-        return bookDao.findBookByTitle(title);
+        return BookMapper.map2To(bookDao.findBookByTitle(title));
     }
 
     @Override
     public List<BookTo> findBooksByAuthor(String author) {
-        return bookDao.findBooksByAuthor(author);
+        return BookMapper.map2To(bookDao.findBooksByAuthor(author));
     }
 
     @Override
     public BookTo saveBook(BookTo book) {
-        return bookDao.save(book);
+        return BookMapper.map(bookDao.save(BookMapper.map(book)));
     }
 
     public void setBookDao(BookDao bookDao) {

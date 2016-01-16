@@ -4,7 +4,6 @@ import pl.spring.demo.annotation.NullableId;
 import pl.spring.demo.common.Sequence;
 import pl.spring.demo.dao.BookDao;
 import pl.spring.demo.entity.BookEntity;
-import pl.spring.demo.to.BookTo;
 
 import java.util.ArrayList;
 import java.util.HashSet;

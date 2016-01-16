@@ -9,6 +9,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.spring.demo.dao.BookDao;
+import pl.spring.demo.entity.BookEntity;
 import pl.spring.demo.to.BookTo;
 
 import java.util.Arrays;
@@ -35,7 +36,7 @@ public class BookServiceImplCacheTest {
     @Test
     public void testShouldFindAllBooksFirstFromDaoThenFromCache() {
         // when
-        Mockito.when(bookDao.findAll()).thenReturn(Arrays.asList(new BookTo(1L, "Title", "Author")));
+        Mockito.when(bookDao.findAll()).thenReturn(Arrays.asList(new BookEntity(1L, "Title", "1 Author Some")));
 
         List<BookTo> allBooks = bookService.findAllBooks();
         assertEquals(1, allBooks.size());

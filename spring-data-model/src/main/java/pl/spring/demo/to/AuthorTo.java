@@ -1,13 +1,29 @@
 package pl.spring.demo.to;
 
+import org.springframework.stereotype.Component;
+
+@Component("authorTo")
 public class AuthorTo {
 	private Long id;
     private String firstName;
+	private String lastName;
+    
+	public AuthorTo() {}
+
     public AuthorTo(Long id, String firstName, String lastName) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
+	}
+
+	public AuthorTo(String author) {
+		String[] authorSplitted = author.split(" ");
+		if(authorSplitted.length == 3) {
+			this.id = Long.parseLong(authorSplitted[0]);
+			this.firstName = authorSplitted[1];
+			this.lastName = authorSplitted[2];
+		}
 	}
 
 	public final Long getId() {
@@ -32,12 +48,6 @@ public class AuthorTo {
 
 	public final void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	private String lastName;
-
-	public AuthorTo() {
-		// TODO Auto-generated constructor stub
 	}
 
 }

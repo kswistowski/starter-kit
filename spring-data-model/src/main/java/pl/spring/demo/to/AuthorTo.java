@@ -25,6 +25,10 @@ public class AuthorTo {
 			this.lastName = authorSplitted[2];
 		}
 	}
+	
+	public String toString() {
+		return firstName + " " + lastName;
+	}
 
 	public final Long getId() {
 		return id;

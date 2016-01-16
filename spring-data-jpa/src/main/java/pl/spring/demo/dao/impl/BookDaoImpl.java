@@ -36,7 +36,7 @@ public class BookDaoImpl implements BookDao {
     public List<BookEntity> findBookByTitle(String title) {
     	ArrayList<BookEntity> foundedBooks = new ArrayList<BookEntity>();
     	for(BookEntity bookEntity : ALL_BOOKS) {
-    		if(bookEntity.getTitle().equals(title)) {
+    		if(bookEntity.getTitle().equalsIgnoreCase(title)) {
     			 foundedBooks.add(bookEntity);
     		}
     	}
@@ -48,7 +48,7 @@ public class BookDaoImpl implements BookDao {
     	ArrayList<BookEntity> foundedBooks = new ArrayList<BookEntity>();
     	for(BookEntity bookEntity : ALL_BOOKS) {
     		for(AuthorTo authorTo : bookEntity.getAuthors()) {
-    			if(authorTo.toString().equals(author)) {
+    			if(authorTo.toString().equalsIgnoreCase(author)) {
     				foundedBooks.add(bookEntity);
     				break;
     			}

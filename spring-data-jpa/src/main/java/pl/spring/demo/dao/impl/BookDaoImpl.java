@@ -4,6 +4,7 @@ import pl.spring.demo.annotation.NullableId;
 import pl.spring.demo.common.Sequence;
 import pl.spring.demo.dao.BookDao;
 import pl.spring.demo.entity.BookEntity;
+import pl.spring.demo.to.AuthorTo;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,12 +34,27 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<BookEntity> findBookByTitle(String title) {
-        return null;
+    	ArrayList<BookEntity> foundedBooks = new ArrayList<BookEntity>();
+    	for(BookEntity bookEntity : ALL_BOOKS) {
+    		if(bookEntity.getTitle().equals(title)) {
+    			 foundedBooks.add(bookEntity);
+    		}
+    	}
+        return foundedBooks;
     }
 
     @Override
     public List<BookEntity> findBooksByAuthor(String author) {
-        return null;
+    	ArrayList<BookEntity> foundedBooks = new ArrayList<BookEntity>();
+    	for(BookEntity bookEntity : ALL_BOOKS) {
+    		for(AuthorTo authorTo : bookEntity.getAuthors()) {
+    			if(authorTo.toString().equals(author)) {
+    				foundedBooks.add(bookEntity);
+    				break;
+    			}
+    		}
+    	}
+        return foundedBooks;
     }
 
     @Override

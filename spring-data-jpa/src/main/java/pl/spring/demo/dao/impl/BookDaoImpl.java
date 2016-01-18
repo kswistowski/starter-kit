@@ -12,14 +12,14 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service("bookDaoImpl")
+@Component
 public class BookDaoImpl implements BookDao {
 
     private final Set<BookEntity> ALL_BOOKS = new HashSet<>();
 
-    private Sequence sequence;
+    private final Sequence sequence;
 
     @Autowired
     public BookDaoImpl( Sequence sequence) {
@@ -69,10 +69,6 @@ public class BookDaoImpl implements BookDao {
     
     public Sequence getSequence() {
     	return this.sequence;
-    }
-
-    public void setSequence(Sequence sequence) {
-        this.sequence = sequence;
     }
 
     private void addTestBooks() {

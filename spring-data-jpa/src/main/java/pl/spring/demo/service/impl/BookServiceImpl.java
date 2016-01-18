@@ -5,6 +5,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import pl.spring.demo.dao.BookDao;
+import pl.spring.demo.entity.BookEntity;
 import pl.spring.demo.mapper.BookMapper;
 import pl.spring.demo.service.BookService;
 import pl.spring.demo.to.BookTo;
@@ -14,7 +15,7 @@ import java.util.List;
 @Service("bookServiceImpl")
 public class BookServiceImpl implements BookService {
 
-    private BookDao bookDao;
+    private final BookDao bookDao;
     
     @Autowired
     public BookServiceImpl( BookDao bookDao) {
@@ -39,10 +40,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookTo saveBook(BookTo book) {
-        return BookMapper.map(bookDao.save(BookMapper.map(book)));
-    }
-
-    public void setBookDao(BookDao bookDao) {
-        this.bookDao = bookDao;
+    	BookEntity bookEntity = BookMapper.map(book);
+    	/* Nie rozumiem dlaczego tu bookEntity jest obiektem, a w metodzie już nie? */
+    	bookEntity = bookDao.save(bookEntity);
+        return BookMapper.map(bookEntity);
     }
 }

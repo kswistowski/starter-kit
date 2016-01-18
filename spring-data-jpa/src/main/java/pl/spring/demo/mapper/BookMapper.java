@@ -3,10 +3,13 @@ package pl.spring.demo.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import pl.spring.demo.entity.BookEntity;
 import pl.spring.demo.to.AuthorTo;
 import pl.spring.demo.to.BookTo;
 
+@Component
 public class BookMapper {
 	public static BookTo map(BookEntity bookEntity) throws NullPointerException {
 		if(bookEntity == null)

@@ -1,17 +1,20 @@
 package pl.spring.demo.aop;
 
 
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.aop.MethodBeforeAdvice;
 import org.springframework.stereotype.Component;
 
 import pl.spring.demo.annotation.NullableId;
 import pl.spring.demo.dao.impl.BookDaoImpl;
+import pl.spring.demo.entity.BookEntity;
 import pl.spring.demo.exception.BookNotNullIdException;
 import pl.spring.demo.to.BookTo;
 import pl.spring.demo.to.IdAware;
 
 import java.lang.reflect.Method;
 
+@Aspect
 @Component("bookDaoAdvisor")
 public class BookDaoAdvisor implements MethodBeforeAdvice {
 
@@ -26,10 +29,6 @@ public class BookDaoAdvisor implements MethodBeforeAdvice {
     private void checkNotNullId(Object o, Object classObject) {
         if (o instanceof IdAware && ((IdAware) o).getId() != null) {
             throw new BookNotNullIdException();
-        }
-        
-        if(classObject instanceof BookDaoImpl && o instanceof BookTo ) {
-        	((BookTo) o).setId(((BookDaoImpl) classObject).getSequence().nextValue(((BookDaoImpl) classObject).findAll()));
         }
     }
 

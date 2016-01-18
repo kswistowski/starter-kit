@@ -23,6 +23,10 @@ public class AuthorTo {
 			this.id = Long.parseLong(authorSplitted[0]);
 			this.firstName = authorSplitted[1];
 			this.lastName = authorSplitted[2];
+		} else {
+			this.id = 0L;
+			this.firstName = "Unknown";
+			this.lastName = "Unknown";
 		}
 	}
 	

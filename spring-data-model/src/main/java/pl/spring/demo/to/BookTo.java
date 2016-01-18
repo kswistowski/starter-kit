@@ -1,5 +1,6 @@
 package pl.spring.demo.to;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component("bookTo")
@@ -11,6 +12,7 @@ public class BookTo implements IdAware {
     public BookTo() {
     }
 
+    @Autowired
     public BookTo(Long id, String title, String authors) {
         this.id = id;
         this.title = title;

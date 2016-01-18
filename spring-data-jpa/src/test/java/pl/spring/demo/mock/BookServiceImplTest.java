@@ -32,6 +32,7 @@ public class BookServiceImplTest {
         BookTo book = new BookTo(null, "title", "1 authorFirstName authorName");
         Mockito.when(bookDao.save(BookMapper.map(book))).thenReturn(new BookEntity(null, "title", "1 authorFirstName authorName"));
         // when
+//        FIXME nullPointerException !?
         BookTo result = bookService.saveBook(book);
         // then
         Mockito.verify(bookDao).save(BookMapper.map(book));

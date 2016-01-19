@@ -5,8 +5,29 @@
     <title>Lista książek</title>
 </head>
 <body>
-    <div th:each="book : ${books}">
-        <p th:text="${book.title}">title</p>
-    </div>
+<table>
+	<tr>
+    	<td>	
+    		<b>ID</b>
+    	</td>
+		<td>	
+    		<b>Title</b>
+    	</td>
+    	<td>	
+    		<b>Authors</b>
+    	</td>
+    </tr>
+	<tr th:each="book : ${books}">
+    	<td>	
+    		<p th:text="${book.id}"></p>
+    	</td>
+		<td>	
+    		<p th:text="${book.title}"></p>
+    	</td>
+    	<td>	
+    		<p th:text="${book.authors}"></p>
+    	</td>
+    </tr>
+</table>
 </body>
 </html>

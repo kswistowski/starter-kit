@@ -8,7 +8,7 @@ import pl.spring.demo.to.BookTo;
 
 import java.util.List;
 
-@Controller
+@RestController
 @ResponseBody
 public class BookRestService {
 
@@ -23,5 +23,13 @@ public class BookRestService {
     @RequestMapping(value = "/book", method = RequestMethod.POST)
     public BookTo saveBook(@RequestBody BookTo book) {
         return bookService.saveBook(book);
+    }
+    
+    @RequestMapping(value = "/book/{bookId}", method = RequestMethod.DELETE)
+    public String deleteBook(@PathVariable("bookId") Long id) {
+    	BookTo bookTo = bookService.findBookById(id);
+    	String bookTitle = bookTo.getTitle();
+    	bookService.deleteBook(bookTo);
+        return bookTitle;
     }
 }

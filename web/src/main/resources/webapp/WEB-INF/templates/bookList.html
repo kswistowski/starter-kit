@@ -1,33 +1,53 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
 <head lang="en">
-    <meta charset="UTF-8"/>
-    <title>Lista książek</title>
+<meta charset="UTF-8" />
+<title>Lista książek</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 </head>
 <body>
-<table>
-	<tr>
-    	<td>	
-    		<b>ID</b>
-    	</td>
-		<td>	
-    		<b>Title</b>
-    	</td>
-    	<td>	
-    		<b>Authors</b>
-    	</td>
-    </tr>
-	<tr th:each="book : ${books}">
-    	<td>	
-    		<p th:text="${book.id}"></p>
-    	</td>
-		<td>	
-    		<p th:text="${book.title}"></p>
-    	</td>
-    	<td>	
-    		<p th:text="${book.authors}"></p>
-    	</td>
-    </tr>
-</table>
+	<table>
+		<tr>
+			<th><b>ID</b></th>
+			<th><b>Title</b></th>
+			<th><b>Authors</b></th>
+		</tr>
+		<tr th:each="book : ${books}">
+			<td>
+				<p th:text="${book.id}"></p>
+			</td>
+			<td>
+				<p th:text="${book.title}"></p>
+			</td>
+			<td>
+				<p th:text="${book.authors}"></p>
+			</td>
+			<td>
+				<form class="del-form" method="post" target="_self">
+					<input class="idField" type="hidden" th:value="${book.id}" />
+					<button type="submit">Remove</button>
+				</form>
+			</td>
+		</tr>
+	</table>
 </body>
+<footer>
+	<script>
+		$(".del-form").submit(function(event) {
+			var form = this;
+			$.ajax({
+				type : 'DELETE',
+				url : "/workshop/book/" + $(form).children().val(),
+				async : true,
+				success : function(result) {
+					$(form).parent().parent().remove();
+					alert("Książka o tytule " + result + " usunięta.");
+				},
+			});
+
+			event.preventDefault();
+		});
+	</script>
+</footer>
 </html>

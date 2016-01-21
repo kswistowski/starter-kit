@@ -19,10 +19,13 @@ import pl.spring.demo.web.utils.FileUtils;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -78,11 +81,34 @@ public class BookRestServiceTest {
         File file = FileUtils.getFileFromClasspath("classpath:pl/spring/demo/web/json/bookToSave.json");
         String json = FileUtils.readFileToString(file);
         // when
-        ResultActions response = this.mockMvc.perform(post("/book")
+        ResultActions response = this.mockMvc.perform(put("/book")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.getBytes()));
         // then
         response.andExpect(status().isOk());
+    }
+    
+    @Test
+    public void testShouldDeleteBook() throws Exception {
+    	//given
+    	File file = FileUtils.getFileFromClasspath("classpath:pl/spring/demo/web/json/bookToSave.json");
+        String json = FileUtils.readFileToString(file);
+        
+    	final BookTo bookTo1 = new BookTo(1L, "FirstBook", "Author1");
+        final BookTo bookTo2 = new BookTo(2L, "Book two", "Author2");
+        
+        final List<BookTo> list = Arrays.asList(bookTo1, bookTo2);
+        
+        Mockito.when(bookService.findAllBooks()).thenReturn(list);
+
+        //when
+        ResultActions response = this.mockMvc.perform(delete("/book")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json.getBytes()));
+        //then
+        response.andExpect(status().isOk())
+        	.andExpect(jsonPath("title").value("FirstBook"));
     }
 }

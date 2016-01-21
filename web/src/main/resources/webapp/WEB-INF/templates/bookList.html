@@ -25,7 +25,9 @@
 			</td>
 			<td>
 				<form class="del-form" method="post" target="_self">
-					<input class="idField" type="hidden" th:value="${book.id}" />
+					<input name="id" type="hidden" th:value="${book.id}" />
+					<input name="title" type="hidden" th:value="${book.title}" />
+					<input name="authors" type="hidden" th:value="${book.authors}" />
 					<button type="submit">Remove</button>
 				</form>
 			</td>
@@ -36,13 +38,23 @@
 	<script>
 		$(".del-form").submit(function(event) {
 			var form = this;
+			
+			var data = {};
+			$(form).serializeArray().map(function(x){data[x.name] = x.value;}); 
+			
 			$.ajax({
-				type : 'DELETE',
-				url : "/workshop/book/" + $(form).children().val(),
+				type : 'delete',
+				url : "/workshop/book",
+		        headers: { 
+		            'Accept': 'application/json',
+		            'Content-Type': 'application/json' 
+		        },
+		        datatype:"json",
+				data: JSON.stringify(data),
 				async : true,
 				success : function(result) {
 					$(form).parent().parent().remove();
-					alert("Książka o tytule " + result + " usunięta.");
+					alert("Książka o tytule  \"" + result.title + "\" usunięta.");
 				},
 			});
 

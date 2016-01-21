@@ -1,12 +1,14 @@
 package pl.spring.demo.web.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.spring.demo.service.BookService;
 import pl.spring.demo.to.BookTo;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @ResponseBody
@@ -21,15 +23,19 @@ public class BookRestService {
     }
 
     @RequestMapping(value = "/book", method = RequestMethod.POST)
-    public BookTo saveBook(@RequestBody BookTo book) {
+    public BookTo addBook(@RequestBody BookTo book) {
         return bookService.saveBook(book);
     }
+
+    @RequestMapping(value = "/book", method = RequestMethod.PUT)
+    public BookTo saveBook(@RequestBody BookTo book) {
+    	return bookService.saveBook(book);
+    }
     
-    @RequestMapping(value = "/book/{bookId}", method = RequestMethod.DELETE)
-    public String deleteBook(@PathVariable("bookId") Long id) {
-    	BookTo bookTo = bookService.findBookById(id);
+    @RequestMapping(value = "/book", method = RequestMethod.DELETE, produces = "application/json")
+    public Map<String, String> deleteBook(@RequestBody BookTo bookTo) {
     	String bookTitle = bookTo.getTitle();
     	bookService.deleteBook(bookTo);
-        return bookTitle;
+    	return Collections.singletonMap("title", bookTitle );
     }
 }
